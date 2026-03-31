@@ -188,3 +188,48 @@ nav ul a:hover {
     border-radius: 20px;
     color: var(--muted);
 }
+
+#skills {
+    padding: 6rem 4rem;
+    background: var(--bg2);
+}
+
+#skills h2 {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 3rem;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.skill-group h4 {
+    color: var(--accent);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-tags span {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 2px;
+    color: var(--text);
+    transition: border-color 0.2s;
+}
+
+.skill-tags span:hover {
+    border-color: var(--accent);
+}
