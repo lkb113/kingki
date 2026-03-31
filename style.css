@@ -22,10 +22,8 @@ body {
     line-height: 1.6;
 }
 
-/* FONTS */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap');
 
-/* NAV */
 nav {
     display: flex;
     justify-content: space-between;
@@ -61,7 +59,6 @@ nav ul a:hover {
     color: var(--accent);
 }
 
-/* HERO */
 #hero {
     min-height: 100vh;
     display: flex;
@@ -109,4 +106,85 @@ nav ul a:hover {
 .hero-links a:hover {
     background: var(--accent);
     color: var(--bg);
+}
+
+#projects {
+    padding: 6rem 4rem;
+}
+
+#projects h2 {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 3rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    background: var(--bg2);
+    border: 1px solid #222;
+    border-radius: 4px;
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.project-type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+}
+
+.project-top a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.project-top a:hover {
+    color: var(--accent);
+}
+
+.project-card h3 {
+    font-family: var(--font-title);
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.project-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.project-stack span {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #333;
+    border-radius: 20px;
+    color: var(--muted);
 }
