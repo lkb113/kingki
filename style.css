@@ -233,3 +233,63 @@ nav ul a:hover {
 .skill-tags span:hover {
     border-color: var(--accent);
 }
+
+#about {
+    padding: 6rem 4rem;
+}
+
+#about h2 {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 3rem;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.about-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.about-text p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.about-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border-left: 1px solid #222;
+    padding-left: 3rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.detail-label {
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.detail-item span:last-child {
+    color: var(--text);
+    font-size: 0.95rem;
+}
