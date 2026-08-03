@@ -347,7 +347,33 @@ nav ul a:hover {
     text-transform: uppercase;
     letter-spacing: 0.15em;
 }
+.robotics-hidden {
+    display: none;
+    grid-column: 1 / -1;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
 
+
+.robotics-hidden.active {
+    display: grid;
+}
+
+
+.robotics-card {
+    cursor: pointer;
+}
+
+
+.expand-icon {
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+
+.robotics-card.open .expand-icon {
+    transform: rotate(45deg);
+}
 /* FOOTER */
 footer {
     padding: 2rem 4rem;

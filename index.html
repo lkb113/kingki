@@ -65,8 +65,7 @@
 
             <div class="project-card">
                 <div class="project-top">
-                    <span class="project-type">A voir</span>
-                    <a href="https://github.com/lkb113" target="_blank">↗</a>
+                    <span class="project-type">Figma</span>
                 </div>
                 <h3>Refonte UX/UI d'un intranet étudiant</h3>
                 <p>J'ai réalisé une analyse UX/UI d'un intranet étudiant afin d'identifier les problèmes de navigation et d'ergonomie, puis conçu un prototype interactif sur Figma</p>
@@ -74,8 +73,112 @@
                     <span>Figma</span>
                     <span>UX/UI</span>
                 </div>
-            </div>
+                </div>
 
+                <!-- Carte principale robotique -->
+                <div class="project-card robotics-card" onclick="toggleRobotics()">
+
+                    <div class="project-top">
+                        <span class="project-type">Embedded / Robotique</span>
+                        <span class="expand-icon">+</span>
+                    </div>
+
+                    <h3>🤖 Projets Robotique</h3>
+
+                    <p>
+                        Conception et programmation de systèmes embarqués :
+                        robots autonomes, contrôle moteur, ESP32, Arduino et servomoteurs.
+                    </p>
+
+                    <div class="project-stack">
+                        <span>Arduino</span>
+                        <span>ESP32</span>
+                        <span>C/C++</span>
+                        <span>Robotique</span>
+                    </div>
+
+                </div>
+
+
+                <!-- Sous projets cachés -->
+                <div id="robotics-projects" class="robotics-hidden">
+
+
+                    <div class="project-card">
+
+                        <div class="project-top">
+                            <span class="project-type">Arduino</span>
+                            <a href="https://github.com/lkb113/wall-e-arduino-obstacle-avoidance" target="_blank">↗</a>
+                        </div>
+
+                        <h3>Wall-E — Robot autonome</h3>
+
+                        <p>
+                            Véhicule autonome Arduino Uno avec détection d'obstacles
+                            par capteur ultrason HC-SR04 et contrôle moteur PWM.
+                        </p>
+
+                        <div class="project-stack">
+                            <span>Arduino</span>
+                            <span>C++</span>
+                            <span>HC-SR04</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="project-card">
+
+                        <div class="project-top">
+                            <span class="project-type">ESP32 / IoT</span>
+                            <a href="https://github.com/lkb113/-robot-tank-esp32" target="_blank">↗</a>
+                        </div>
+
+                        <h3>Robot Tank FPV</h3>
+
+                        <p>
+                            Robot chenillé piloté à distance avec ESP32-CAM,
+                            streaming vidéo et interface web embarquée.
+                        </p>
+
+                        <div class="project-stack">
+                            <span>ESP32-CAM</span>
+                            <span>WiFi</span>
+                            <span>PWM</span>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="project-card">
+
+                        <div class="project-top">
+                            <span class="project-type">ESP32-S2</span>
+                            <a href="https://github.com/lkb113/-spider-bot-esp32" target="_blank">↗</a>
+                        </div>
+
+                        <h3>Spider-Bot</h3>
+
+                        <p>
+                            Robot araignée 8 pattes basé sur ESP32-S2,
+                            avec 8 servomoteurs et écran OLED I2C.
+                        </p>
+
+                        <div class="project-stack">
+                            <span>ESP-IDF</span>
+                            <span>C</span>
+                            <span>Servo</span>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            </div>
         </div>
     </section>
 
@@ -187,5 +290,19 @@
     <footer>
         <p>Léa Kingkittisak – 2026</p>
     </footer>
+    <script>
+
+    function toggleRobotics(){
+
+        const projects = document.getElementById("robotics-projects");
+        const card = document.querySelector(".robotics-card");
+
+        projects.classList.toggle("active");
+        card.classList.toggle("open");
+
+    }
+
+    </script>
+
 </body>
 </html>
