@@ -382,3 +382,72 @@ footer {
     font-size: 0.8rem;
     border-top: 1px solid #222;
 }
+.about-cta {
+    margin-top: 3rem;
+}
+
+.about-btn {
+    text-decoration: none;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.7rem 1.8rem;
+    border-radius: 2px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.about-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+/* ── LIVRES ── */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.book-card {
+    display: flex;
+    background: #111;
+    border: 1px solid #1e1e1e;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.book-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.book-spine {
+    width: 6px;
+    background: var(--spine-color, var(--accent));
+    flex-shrink: 0;
+}
+
+.book-content {
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.book-type {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+}
+
+.book-content h3 {
+    font-family: var(--font-title);
+    font-size: 1rem;
+}
+
+.book-content p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}

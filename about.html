@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Léa - Et sinon ?</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <style>
+        /* ── PAGE ABOUT ── */
+        .about-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4rem;
+        }
+
+        .about-hero h1 {
+            font-family: var(--font-title);
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+        }
+
+        .about-hero h1 span {
+            color: var(--accent);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 3rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--accent); }
+
+        /* ── SECTIONS PASSIONS ── */
+        .passion-section {
+            padding: 5rem 4rem;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .passion-section:nth-child(even) {
+            background: var(--bg2);
+        }
+
+        .passion-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .passion-section h2 {
+            font-family: var(--font-title);
+            font-size: clamp(1.8rem, 4vw, 3rem);
+        }
+
+        .passion-section > p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        /* ── GALERIE DESSIN ── */
+        .gallery-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .gallery-main {
+            position: relative;
+            aspect-ratio: 4/3;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-main:hover img { transform: scale(1.03); }
+
+        .gallery-main .zoom-hint {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.7);
+            color: var(--muted);
+            font-size: 0.75rem;
+            padding: 0.3rem 0.7rem;
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .gallery-main:hover .zoom-hint { opacity: 1; }
+
+        .gallery-thumbs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .gallery-thumb {
+            aspect-ratio: 4/3;
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .gallery-thumb.active { border-color: var(--accent); }
+        .gallery-thumb:hover { border-color: #444; }
+
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .gallery-thumb.active img,
+        .gallery-thumb:hover img { opacity: 1; }
+
+        /* placeholder si pas d'image */
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #333;
+            font-size: 0.8rem;
+        }
+
+        .img-placeholder span { font-size: 2rem; }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-out;
+        }
+
+        .modal.open { display: flex; }
+
+        .modal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            color: var(--muted);
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover { color: var(--accent); }
+
+        /* ── SCÈNE MARCHE ── */
+        .walk-scene {
+            position: relative;
+            height: 180px;
+            background: #0d0d0d;
+            border: 1px solid #1a1a1a;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ciel */
+        .walk-scene::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, #0a0a1a 0%, #0d0d0d 60%);
+        }
+
+        /* sol */
+        .walk-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: #111;
+            border-top: 1px solid #1e1e1e;
+        }
+
+        /* bâtiments */
+        .walk-buildings {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding: 0 20px;
+        }
+
+        .building {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-bottom: none;
+            flex-shrink: 0;
+        }
+
+        .building .windows {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+            padding: 6px;
+        }
+
+        .window-light {
+            width: 6px;
+            height: 8px;
+            background: #00ff8822;
+            border-radius: 1px;
+        }
+
+        .window-light.on {
+            background: #00ff8866;
+            box-shadow: 0 0 4px #00ff8844;
+        }
+
+        /* arbre */
+        .walk-street {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 40px;
+            pointer-events: none;
+        }
+
+        .walker {
+            position: absolute;
+            bottom: 25px;
+            left: -10%;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 6px #00ff8844);
+            animation: walk-loop 10s linear infinite;
+            display: inline-block;
+            transform: scaleX(-1);
+        }
+
+        @keyframes walk-loop {
+            0%   { left: -10%; }
+            100% { left: 110%; }
+        }
+
+        /* lune */
+        .walk-moon {
+            position: absolute;
+            top: 16px;
+            right: 40px;
+            font-size: 1.2rem;
+            opacity: 0.6;
+        }
+
+        .walk-caption {
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* ── JEUX VIDÉO ── */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .game-card {
+            background: #111;
+            border: 1px solid #1e1e1e;
+            border-radius: 4px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, var(--game-color, #00ff8811) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .game-card:hover::before { opacity: 1; }
+        .game-card:hover {
+            border-color: var(--game-color, var(--accent));
+            transform: translateY(-3px);
+        }
+
+        .game-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+
+        .game-card h3 {
+            font-family: var(--font-title);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .game-card p {
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .game-tag {
+            display: inline-block;
+            margin-top: 0.8rem;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            color: var(--muted);
+        }
+
+        /* ── MANGA ── */
+        .manga-carousel {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manga-track {
+            display: flex;
+            gap: 1rem;
+            transition: transform 0.4s ease;
+        }
+
+        .manga-card {
+            min-width: 180px;
+            background: #111;
+            border: 1px solid #1e1e1e;
+            border-radius: 4px;
+            padding: 1.2rem;
+            flex-shrink: 0;
+            transition: border-color 0.2s, transform 0.2s;
+            cursor: default;
+        }
+
+        .manga-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .manga-cover {
+            width: 100%;
+            aspect-ratio: 2/3;
+            background: #1a1a1a;
+            border-radius: 2px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            border: 1px solid #222;
+        }
+
+        .manga-card h3 {
+            font-family: var(--font-title);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .manga-card p {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .manga-status {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 20px;
+            border: 1px solid #00ff8844;
+            color: var(--accent);
+        }
+
+        .manga-controls {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+            align-items: center;
+        }
+
+        .manga-btn {
+            background: none;
+            border: 1px solid #222;
+            color: var(--muted);
+            width: 36px;
+            height: 36px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: border-color 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .manga-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .manga-dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .manga-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #333;
+            transition: background 0.2s;
+        }
+
+        .manga-dot.active { background: var(--accent); }
+
+        /* ── FOOTER ── */
+        .about-footer {
+            padding: 3rem 4rem;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .about-footer p { color: var(--muted); font-size: 0.85rem; }
+
+        .about-footer a {
+            text-decoration: none;
+            color: var(--accent);
+            font-size: 0.85rem;
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+
+        .about-footer a:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .about-hero, .passion-section { padding: 3rem 1.5rem; }
+            .gallery-layout { grid-template-columns: 1fr; }
+            .gallery-thumbs { flex-direction: row; }
+            .gallery-thumb { aspect-ratio: 1; }
+            .about-footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <span class="logo">lkb113</span>
+        <ul>
+            <li><a href="index.html">Portfolio</a></li>
+            <li><a href="index.html#projects">Projets</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="about-hero">
+        <a href="index.html" class="back-link">← Retour au portfolio</a>
+        <p class="tag">La personne derrière le code</p>
+        <h1>Et sinon,<br>qui suis-je <span>vraiment</span> ?</h1>
+        <p class="subtitle">Développeuse le jour, mais pas que ! J'ai quelques hobby, passions à vous montrer.</p>
+    </section>
+
+    <!-- 🎨 DESSIN -->
+    <section class="passion-section">
+        <div class="passion-header">
+            <h2>Dessin</h2>
+        </div>
+        <p>Dessiner c'est ma façon de décompresser et de m'exprimer..</p>
+
+        <div class="gallery-layout">
+            <div class="gallery-main" id="galleryMain" onclick="openModal()">
+                <div class="img-placeholder" id="mainPlaceholder">
+                    <span>🖼️</span>
+                </div>
+                <img id="mainImg" src="" alt="Dessin principal" style="display:none;">
+                <span class="zoom-hint">🔍 Agrandir</span>
+            </div>
+
+            <div class="gallery-thumbs" id="galleryThumbs">
+                <!-- Les miniatures sont générées par JS -->
+                <div class="gallery-thumb active">
+                    <div class="img-placeholder"><span>✏️</span></div>
+                </div>
+                <div class="gallery-thumb">
+                    <div class="img-placeholder"><span>🖌️</span></div>
+                </div>
+                <div class="gallery-thumb">
+                    <div class="img-placeholder"><span>🎭</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal" onclick="closeModal()">
+        <button class="modal-close" onclick="closeModal()">x</button>
+        <img id="modalImg" src="" alt="Dessin agrandi">
+    </div>
+
+    <!-- 🚶 MARCHE -->
+    <section class="passion-section">
+        <div class="passion-header">
+            <h2>Balades</h2>
+        </div>
+        <p>J'aime marcher, observer, me perdre dans mes pensées cela me change les idées, me fait prendre du recul.</p>
+
+        <div class="walk-scene">
+            <span class="walk-moon">🌙</span>
+
+            <div class="walk-buildings">
+                <div class="building" style="width:50px; height:80px;">
+                    <div class="windows">
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                    </div>
+                </div>
+                <div class="building" style="width:35px; height:55px;">
+                    <div class="windows">
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                    </div>
+                </div>
+                <div class="building" style="width:60px; height:100px;">
+                    <div class="windows">
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                    </div>
+                </div>
+                <div class="walk-tree" style="left: 220px;">🌳</div>
+                <div class="building" style="width:40px; height:65px; margin-left: 40px;">
+                    <div class="windows">
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                    </div>
+                </div>
+                <div class="building" style="width:55px; height:85px;">
+                    <div class="windows">
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                    </div>
+                </div>
+                <div class="walk-tree" style="margin-left: 20px;">🌲</div>
+                <div class="building" style="width:45px; height:70px; margin-left: 10px;">
+                    <div class="windows">
+                        <div class="window-light on"></div>
+                        <div class="window-light"></div>
+                        <div class="window-light on"></div>
+                        <div class="window-light on"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="walk-ground"></div>
+            <div class="walker">🚶‍♀️</div>
+        </div>
+    </section>
+
+    <!-- 🎮 JEUX VIDÉO -->
+    <section class="passion-section">
+        <div class="passion-header">
+            <h2>Jeux vidéo</h2>
+        </div>
+        <p>Pas une gameuse hardcore, mais quelques jeux ont vraiment leur place dans mon quotidien.</p>
+
+        <div class="games-grid">
+
+            <div class="game-card" style="--game-color: #00aa4422;">
+                <div class="game-icon">⛏️</div>
+                <h3>Minecraft</h3>
+                <p>Plutôt spectatrice que joueuse - meme si j'aime bien l'univers créatif (build), le jump, le speedrun...</p>
+                <span class="game-tag">Stream</span>
+            </div>
+
+            <div class="game-card" style="--game-color: #7c3aed22;">
+                <div class="game-icon">♟️</div>
+                <h3>TFT</h3>
+                <p>Teamfight Tactics, c'est mon jeu du moment. Stratégie, adaptation, optimisation, même si j'ai l'impression de pas avoir de chance pour drop les personnages.</p>
+                <span class="game-tag">Stratégie</span>
+            </div>
+
+            <div class="game-card" style="--game-color: #f9731622;">
+                <div class="game-icon">📱</div>
+                <h3>Mobile</h3>
+                <p>Brawl Stars et COD Mobile pour jouer n'importe où, n'importe quand. Rapide, fun, sans prise de tête.</p>
+                <span class="game-tag">Casual</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 📚 LECTURE -->
+    <section class="passion-section">
+        <div class="passion-header">
+            <h2>Lectures</h2>
+        </div>
+        <p>Je lis ce qui me tombe sous la main que ce soit:  manga, roman policier, science-fiction. Peu importe le genre, tant que ça m'embarque.</p>
+
+        <div class="books-grid">
+
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #7c3aed;"></div>
+                <div class="book-content">
+                    <span class="book-type">Manhwa · Action</span>
+                    <h3>Seule la mort attend la vilaine</h3>
+                    <p>Mon manhwa coup de cœur. L'histoire, l'héroïne, le rythme, l'univers, tout.</p>
+                    <span class="manga-status">❤️ Coup de cœur</span>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #0ea5e9;"></div>
+                <div class="book-content">
+                    <span class="book-type">manga · Action</span>
+                    <h3>Wind Breaker</h3>
+                    <p>les personnages, le scénario, l'ambiance, la variété des sujets traités.</p>
+                    <span class="manga-status">✓ Lu</span>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #f59e0b;"></div>
+                <div class="book-content">
+                    <span class="book-type">Light Novel · Fantasy</span>
+                    <h3>Kuma Kuma Kuma Bear</h3>
+                    <p>Adorable, feel-good et décomplexé. Parfait pour décompresser.</p>
+                    <span class="manga-status">En cours</span>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #00ff88;"></div>
+                <div class="book-content">
+                    <span class="book-type">Roman · Jeunesse</span>
+                    <h3>L'œil du loup</h3>
+                    <p>Daniel Pennac. Court, poétique, inoubliable.</p>
+                    <span class="manga-status">✓ Lu</span>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #ef4444;"></div>
+                <div class="book-content">
+                    <span class="book-type">Roman · Policier</span>
+                    <h3>Toxique</h3>
+                    <p>Niko Tackian. Sombre, casse cerveau mais pas trop le genre policier classique.</p>
+                    <span class="manga-status">✓ Lu</span>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #f97316;"></div>
+                <div class="book-content">
+                    <span class="book-type">Roman · Science-fiction</span>
+                    <h3>Demain les chats</h3>
+                    <p>Bernard Werber. Vu du point de vue d'un chat, décalé et original.</p>
+                    <span class="manga-status">✓ Lu</span>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-spine" style="--spine-color: #a3a3a3;"></div>
+                <div class="book-content">
+                    <span class="book-type">Roman · Autobiographie</span>
+                    <h3>Un café, une cigarette</h3>
+                    <p>Jean-Jacques Busino. Sérieux, humain, et on ce prend une réalité en pleine face.</p>
+                    <span class="manga-status">✓ Lu</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="about-footer">
+        <p>C'est tout pour la personne derrière le code </p>
+        <a href="index.html">← Voir le portfolio</a>
+    </div>
+
+    <script>
+        // ── GALERIE ──
+        // Pour ajouter tes vraies images, remplace les chemins ici :
+        const drawings = [
+            { src: 'images/dessins/IMG_5133.png', alt: 'Mon dessin 1' },
+            { src: 'images/dessins/IMG_5134.png', alt: 'Mon dessin 2' },
+            { src: 'images/dessins/IMG_5138.png', alt: 'Mon dessin 3' },
+            { src: 'images/dessins/IMG_5136.png', alt: 'Mon dessin 4' }
+        ];
+
+        let currentImg = 0;
+
+        function initGallery() {
+            if (drawings.length === 0) return;
+            const main = document.getElementById('mainImg');
+            const placeholder = document.getElementById('mainPlaceholder');
+            const thumbs = document.getElementById('galleryThumbs');
+
+            placeholder.style.display = 'none';
+            main.style.display = 'block';
+            main.src = drawings[0].src;
+
+            thumbs.innerHTML = drawings.map((d, i) => `
+                <div class="gallery-thumb ${i === 0 ? 'active' : ''}" onclick="setImage(${i})">
+                    <img src="${d.src}" alt="${d.alt}">
+                </div>
+            `).join('');
+        }
+
+        function setImage(index) {
+            currentImg = index;
+            const main = document.getElementById('mainImg');
+            main.src = drawings[index].src;
+            document.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === index);
+            });
+        }
+
+        function openModal() {
+            if (drawings.length === 0) return;
+            const modal = document.getElementById('modal');
+            document.getElementById('modalImg').src = drawings[currentImg].src;
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        initGallery();
+
+        // ── CARROUSEL MANGA ──
+        const track = document.getElementById('mangaTrack');
+        const cards = track.querySelectorAll('.manga-card');
+        const dotsContainer = document.getElementById('mangaDots');
+        let mangaIndex = 0;
+        const visible = 3;
+        const max = Math.max(0, cards.length - visible);
+
+        cards.forEach((_, i) => {
+            if (i <= max) {
+                const dot = document.createElement('div');
+                dot.className = 'manga-dot' + (i === 0 ? ' active' : '');
+                dotsContainer.appendChild(dot);
+            }
+        });
+
+        function mangaScroll(dir) {
+            mangaIndex = Math.max(0, Math.min(max, mangaIndex + dir));
+            const cardWidth = cards[0].offsetWidth + 16;
+            track.style.transform = `translateX(-${mangaIndex * cardWidth}px)`;
+            document.querySelectorAll('.manga-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === mangaIndex);
+            });
+        }
+    </script>
+
+</body>
+</html>
