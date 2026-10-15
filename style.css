@@ -320,6 +320,23 @@ section h2 {
 /* ── COMPÉTENCES ── */
 #skills {
     background: var(--bg);
+    position: relative;
+    border-radius: 65px 65px 0 0;
+    margin-top: -35px;
+    padding-top: 5rem;
+    z-index: 2;
+}
+
+/* Introduction centrée */
+#skills > h2,
+#skills > .section-sub {
+    text-align: center;
+}
+#skills > .tag {
+    text-align: center;
+}
+#skills > .section-sub {
+    margin-bottom: 4rem;
 }
 
 .skills-grid {
@@ -783,4 +800,40 @@ footer {
     display: block;
     width: 100%;
     height: 60px;
+}
+
+
+/* ── À PROPOS : DEUX PANNEAUX ── */
+.about-content {
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.about-text {
+    background: var(--card);
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(45, 43, 61, 0.08);
+}
+
+.about-details {
+    background: #F8EBDD;
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    border-left: none;
+    border-radius: 24px;
+    box-shadow: 0 16px 35px rgba(45, 43, 61, 0.10);
+}
+
+/* Conserver un affichage confortable sur mobile */
+@media (max-width: 900px) {
+    .about-details {
+        border-top: 1px solid var(--border);
+        padding: 2rem;
+    }
+
+    .about-text {
+        padding: 2rem;
+    }
 }
