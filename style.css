@@ -518,7 +518,130 @@ section h2 {
 .robotics-card.open .expand-icon {
     transform: rotate(45deg);
 }
+/* ── MODAL ROBOTS ── */
+.robot-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(4px);
+}
 
+.robot-modal.open { display: flex; }
+
+.robot-modal-content {
+    background: var(--card);
+    border-radius: 20px;
+    max-width: 700px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+.robot-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--muted);
+    z-index: 10;
+    transition: color 0.2s;
+}
+
+.robot-modal-close:hover { color: var(--accent); }
+
+.robot-modal-media {
+    width: 100%;
+    aspect-ratio: 9/16;
+    max-height: 400px;
+    background: #111;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.robot-modal-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.robot-modal-media video {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.robot-modal-info {
+    padding: 1.8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.robot-modal-type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.robot-modal-info h3 {
+    font-family: var(--font-title);
+    font-size: 1.4rem;
+    color: var(--text);
+}
+
+.robot-modal-info p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+.robot-modal-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.robot-modal-stack span {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    color: var(--muted);
+}
+
+.robot-modal-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    text-decoration: none;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 2px solid var(--accent);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    width: fit-content;
+    transition: all 0.2s;
+}
+
+.robot-modal-link:hover {
+    background: var(--accent);
+    color: white;
+}
 /* ── FOOTER ── */
 footer {
     padding: 2rem 4rem;

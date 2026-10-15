@@ -104,10 +104,10 @@
             <!-- Sous projets cachés -->
             <div id="robotics-projects" class="robotics-hidden">
 
-                <div class="project-card">
+                <div class="project-card" onclick="openRobot('walle')">
                     <div class="project-top">
                         <span class="project-type">Arduino</span>
-                        <a href="https://github.com/lkb113/wall-e-arduino-obstacle-avoidance" target="_blank">↗</a>
+                        <a href="https://github.com/lkb113/wall-e-arduino-obstacle-avoidance" target="_blank" onclick="event.stopPropagation()">↗</a>
                     </div>
                     <h3>Wall-E — Robot autonome</h3>
                     <p>Véhicule autonome Arduino Uno avec détection d'obstacles par capteur ultrason HC-SR04 et contrôle moteur PWM.</p>
@@ -118,10 +118,10 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" onclick="openRobot('tank')">
                     <div class="project-top">
                         <span class="project-type">ESP32 / IoT</span>
-                        <a href="https://github.com/lkb113/-robot-tank-esp32" target="_blank">↗</a>
+                        <a href="https://github.com/lkb113/-robot-tank-esp32" target="_blank" onclick="event.stopPropagation()">↗</a>
                     </div>
                     <h3>Robot Tank FPV</h3>
                     <p>Robot chenillé piloté à distance avec ESP32-CAM, streaming vidéo et interface web embarquée.</p>
@@ -132,10 +132,10 @@
                     </div>
                 </div>
 
-                <div class="project-card">
+                <div class="project-card" onclick="openRobot('spider')">
                     <div class="project-top">
                         <span class="project-type">ESP32-S2</span>
-                        <a href="https://github.com/lkb113/-spider-bot-esp32" target="_blank">↗</a>
+                        <a href="https://github.com/lkb113/-spider-bot-esp32" target="_blank" onclick="event.stopPropagation()">↗</a>
                     </div>
                     <h3>Spider-Bot</h3>
                     <p>Robot araignée 8 pattes basé sur ESP32-S2, avec 8 servomoteurs et écran OLED I2C.</p>
@@ -304,8 +304,82 @@
         projects.classList.toggle("active");
         card.classList.toggle("open");
     }
+
+    const robotData = {
+        walle: {
+            type: "Arduino",
+            title: "Wall-E — Robot autonome",
+            desc: "Robot 4 roues autonome : si un obstacle est détecté par le capteur ultrason HC-SR04, il recule et change de direction automatiquement. Contrôle moteur via PWM.",
+            media: { type: "video", src: "images/robots/test_Wall-E_marche_recule.mov", poster: "images/robots/construction_de_Wall-E.jpeg" },
+            stack: ["Arduino Uno", "C++", "HC-SR04", "PWM"],
+            link: "https://github.com/lkb113/wall-e-arduino-obstacle-avoidance"
+        },
+        tank: {
+            type: "ESP32 / IoT",
+            title: "Robot Tank FPV",
+            desc: "Robot chenillé télécommandable via une interface web embarquée. Caméra à l'avant pour la vision en temps réel (FPV). Contrôle moteur PWM via WiFi.",
+            media: { type: "video", src: "images/robots/vidéo_test_cam_tanks.mp4", poster: "images/robots/robot-tank_en_cours.jpeg" },
+            stack: ["ESP32-CAM", "WiFi", "PWM", "Interface Web"],
+            link: "https://github.com/lkb113/-robot-tank-esp32"
+        },
+        spider: {
+            type: "ESP32-S2",
+            title: "Spider-Bot",
+            desc: "Robot araignée 8 pattes avec 2 servomoteurs MG90S par patte (hanche + jambe), soit 8 servos au total. Écran OLED SSD1306 0.96\" I2C pour afficher des yeux animés.",
+            media: { type: "video", src: "images/robots/Spider-Bot_bouge.mov", poster: "images/robots/V1_Spider-Bot.jpeg" },
+            stack: ["ESP32-S2", "ESP-IDF", "C", "Servo MG90S", "OLED I2C"],
+            link: "https://github.com/lkb113/-spider-bot-esp32"
+        }
+    };
+
+    function openRobot(id) {
+        const r = robotData[id];
+        document.getElementById('robotType').textContent = r.type;
+        document.getElementById('robotTitle').textContent = r.title;
+        document.getElementById('robotDesc').textContent = r.desc;
+        document.getElementById('robotLink').href = r.link;
+
+        const stack = document.getElementById('robotStack');
+        stack.innerHTML = r.stack.map(s => `<span>${s}</span>`).join('');
+
+        const media = document.getElementById('robotMedia');
+        if (r.media.type === 'video') {
+            media.innerHTML = `<video controls poster="${r.media.poster}">
+                <source src="${r.media.src}">
+            </video>`;
+        } else {
+            media.innerHTML = `<img src="${r.media.src}" alt="${r.title}">`;
+        }
+
+        document.getElementById('robotModal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeRobot() {
+        document.getElementById('robotModal').classList.remove('open');
+        document.getElementById('robotMedia').innerHTML = '';
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeRobot();
+    });
     </script>
     <script src="animations.js"></script>
-
+    
+    <!-- MODAL ROBOTS -->
+    <div class="robot-modal" id="robotModal" onclick="closeRobot()">
+        <div class="robot-modal-content" onclick="event.stopPropagation()">
+            <button class="robot-modal-close" onclick="closeRobot()">×</button>
+            <div class="robot-modal-media" id="robotMedia"></div>
+            <div class="robot-modal-info">
+                <span class="robot-modal-type" id="robotType"></span>
+                <h3 id="robotTitle"></h3>
+                <p id="robotDesc"></p>
+                <div class="robot-modal-stack" id="robotStack"></div>
+                <a id="robotLink" href="#" target="_blank" class="robot-modal-link">Voir sur GitHub ↗</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
